@@ -66,3 +66,6 @@ val symbols = Array("<", "-", ">")
 val counts = Array(2, 10, 2)
 val pairs = symbols.zip(counts)
 for ((s, n) <- pairs) Console.print(s * n)
+
+val sc = scala.collection.mutable.Map("Alice" -> 10.0, "Bob" -> 3.0, "Cindy" -> 8.0)
+val sc2 = for ((k, v) <- sc) yield (k, v*0.9)
