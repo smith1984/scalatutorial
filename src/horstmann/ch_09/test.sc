@@ -35,12 +35,12 @@ val source2 = Source.fromString("Hello, World!")
 //val source3  = Source.stdin
 
 import java.io._
-val file = new File("/home/ito/scalaprojects/scalatutorial/myfile.txt")
+val file = new File("./scalaprojects/scalatutorial/myfile.txt")
 val in = new FileInputStream(file)
 val bytes = new Array[Byte](file.length.toInt)
 in.read(bytes)
 in.close()
 
-val out = new PrintWriter("numbers.txt")
+val out = new PrintWriter("./scalaprojects/scalatutorial/numbers.txt")
 for (i <- 1 to 100) out.println(i)
 out.close()
