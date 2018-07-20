@@ -1,4 +1,5 @@
 import scala.collection.mutable.ArrayBuffer
+import scala.io.Source
 
 val coll = Seq(1, 1, 2, 3, 5, 8, 13)
 val set = coll.toSet
@@ -60,3 +61,68 @@ def ulcase(s: String) = Vector(s.toUpperCase(), s.toLowerCase())
 names.map(ulcase)
 
 names.flatMap(ulcase)
+
+val buffer_ = ArrayBuffer("Peter", "Paul", "Mary")
+buffer_.transform(_.toUpperCase)
+
+names.foreach(println)
+
+"-3+4".collect { case '+' => 1 ; case '-' => -1 }
+
+List(1, 7, 2, 9).reduceLeft(_ - _)
+
+List(1, 7, 2, 9).reduceRight(_ - _)
+
+List(1, 7, 2, 9).foldLeft(0)(_ - _)
+
+(0 /: List(1, 7, 2, 9))(_ - _)
+
+val freq = scala.collection.mutable.Map[Char, Int]()
+for (c <- "Mississippi") freq(c) = freq.getOrElse(c, 0) + 1
+println(freq)
+
+(Map[Char, Int]() /: "Mississippi") {
+  (m, c) => m + (c -> (m.getOrElse(c, 0) + 1))
+}
+
+(1 to 10).scanLeft(0)(_ + _)
+
+val prices = List(5.0, 20.0, 9.95)
+val quantities = List(10, 2, 1)
+
+prices zip quantities
+(prices zip quantities) map { p => p._1 * p._2 }
+((prices zip quantities) map { p => p._1 * p._2 }) sum
+
+List(5.0, 20.0, 9.95) zip List(10, 2)
+List(5.0, 20.0, 9.95).zipAll(List(10, 2), 0.0, 1)
+
+"Scala".zipWithIndex
+"Scala".zipWithIndex.max
+"Scala".toUpperCase.zipWithIndex.max
+"Scala".zipWithIndex.max._2
+
+def numsFrom(n: BigInt): Stream[BigInt] = n #:: numsFrom(n + 1)
+val tenOrMore = numsFrom(10)
+tenOrMore.tail.tail.tail
+val squares = numsFrom(1).map(x => x * x)
+squares.take(5).force
+
+val words = Source.fromFile("/usr/share/dict/words").getLines.toStream
+words // Stream(A, ?)
+words(5) // Aachen
+words // Stream(A, A's, AOL, AOL's, Aachen, ?)
+
+val palindromicSquares = (1 to 1000000).view
+  .map(x => x * x)
+  .filter(x => x.toString == x.toString.reverse)
+
+palindromicSquares.take(10).mkString(",")
+
+import scala.collection.JavaConversions._
+val props: scala.collection.mutable.Map[String, String] =
+  System.getProperties()
+
+for (i <- (0 until 100000).par) print(s" $i")
+
+(for (i <- (0 until 100000).par) yield i) == (0 until 100000)
